@@ -1,0 +1,53 @@
+import re
+import urllib.request
+
+def get_date(d, html):
+    try:
+        reg = re.compile('href=".+?([0-9]{2}\.([0-9]{2})\.([0-9]{4})).</a>', flags=re.U | re.DOTALL)
+        regex = re.search(reg,html)
+        if regex:
+            date = regex.group(1)
+            month = regex.group(2)
+            year = regex.group(3)
+    except:
+        reg = re.compile('<span class="date">([0-9]{2} ([а-яё]*?) ([0-9]{4})),', flags=re.U | re.DOTALL)
+        regex = re.search(reg,html)
+        if regex:
+            date = regex.group(1)
+            month_let = regex.group(2)
+            month = d[month_let]
+            try:
+                year = regex.group(3)
+            except:
+                year = '2016'
+    return date
+    return month
+    return year
+    
+def get_author(html):
+    reg1 = re.compile('<div class="author"><a href="/authors/[0-9]+?">([ А-ЯЁа-яё]*?)</a></div>', flags=re.U | re.DOTALL)
+    reg2 = re.compile('<div class="author">Подготовил ([ А-ЯЁа-яё]*?)</div>', flags=re.U | re.DOTALL)
+    regex = re.findall(reg1,html)
+    author = ''.join(regex)
+    if author == '':
+        regex = re.findall(reg2,html)
+        author = ''.join(regex)
+    return author
+
+def get_title(html):
+    reg = re.compile('<h1 class="title">(.*?)</h1>', flags=re.U | re.DOTALL)
+    regex = re.search(reg,html)
+    if regex:
+        title = regex.group(1)
+    return title
+
+def get_category(html):
+    reg = re.compile('<div class="date-catalog"><span class="catalog">(.*?)</span>', flags=re.U | re.DOTALL)
+    regex = re.search(reg,html)
+    if regex:
+        category = regex.group(1)
+    return category
+
+d = {'января': '01', 'февраля': '02', 'марта': '03', 'апреля': '04', 'мая': '05', 'июня': '06', 'июля': '07', 'августа': '08', 'сентября': '09', 'октября': '10', 'ноября': '11', 'декабря': '12'}
+page = urllib.request.urlopen('http://ivgazeta.ru/read/22666')
+html = page.read().decode('UTF-8')
