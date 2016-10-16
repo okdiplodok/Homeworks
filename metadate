@@ -2,7 +2,8 @@ import re
 import urllib.request
 import html
 
-def get_date(d, htl):
+def get_date(htl):
+    d = {'января': '01', 'февраля': '02', 'марта': '03', 'апреля': '04', 'мая': '05', 'июня': '06', 'июля': '07', 'августа': '08', 'сентября': '09', 'октября': '10', 'ноября': '11', 'декабря': '12'}
     reg = re.compile('href=".+?([0-9]{2}\.([0-9]{2})\.([0-9]{4})).</a>', flags=re.U | re.DOTALL)
     regex = re.search(reg,htl)
     if regex:
@@ -10,22 +11,18 @@ def get_date(d, htl):
         month = regex.group(2)
         year = regex.group(3)
     else:
-        reg = re.compile('<span class="date">([0-9]{2} ([а-яё]*?) ([0-9]{4})),', flags=re.U | re.DOTALL)
+        reg = re.compile('<span class="date">([0-9]{1,2}) ([а-яё]*?) ([0-9]{4}),', flags=re.U | re.DOTALL)
         regex = re.search(reg,htl)
         if regex:
-            date = regex.group(1)
+            day = regex.group(1)
             month_let = regex.group(2)
             month = d[month_let]
             try:
                 year = regex.group(3)
             except:
                 year = '2016'
-    print (date)
-    print (month)
-    print (year)
-    return date
-    return month
-    return year
+            date = day + '.' + month + '.' + year
+    return date, month, year
     
 def get_author(htl):
     reg1 = re.compile('<div class="author"><a href="/authors/[0-9]+?">([ А-ЯЁа-яё]*?)</a></div>', flags=re.U | re.DOTALL)
@@ -35,7 +32,8 @@ def get_author(htl):
     if author == '':
         regex = re.findall(reg2,htl)
         author = ''.join(regex)
-    print (author)
+        if author == '':
+            author = 'Noname'
     return author
 
 def get_title(htl):
@@ -43,16 +41,14 @@ def get_title(htl):
     regex = re.search(reg,htl)
     if regex:
         title = regex.group(1)
-    print (title)
     return title
 
-def get_category(htl):
+def get_topic(htl):
     reg = re.compile('<div class="date-catalog"><span class="catalog">(.*?)</span>', flags=re.U | re.DOTALL)
     regex = re.search(reg,htl)
     if regex:
-        category = regex.group(1)
-    print (category)
-    return category
+        topic = regex.group(1)
+    return topic
 
 def get_text(htl):
     reg = re.compile('<div class="newsarticle-summary">(.*?)<div class="copyrights">', flags=re.U | re.DOTALL)
@@ -64,16 +60,4 @@ def get_text(htl):
         text = regSpace.sub(" ",raw_text)
         text = regTag.sub("", text)
         text = html.unescape(text)
-    print (text)
     return text
-
-    
-
-d = {'января': '01', 'февраля': '02', 'марта': '03', 'апреля': '04', 'мая': '05', 'июня': '06', 'июля': '07', 'августа': '08', 'сентября': '09', 'октября': '10', 'ноября': '11', 'декабря': '12'}
-page = urllib.request.urlopen('http://ivgazeta.ru/read/100')
-htl = page.read().decode('UTF-8')
-get_date(d, htl)
-get_author(htl)
-get_title(htl)
-get_category(htl)
-get_text(htl)
