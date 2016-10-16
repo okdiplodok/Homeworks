@@ -2,6 +2,14 @@ import re
 import urllib.request
 import html
 
+def metatable_append(path, author, title, date, topic, pageUrl, year):
+    if not os.path.exists('C:\\Users\\zu_ann\\YandexDisk\\Ивановская газета'):
+        os.makedirs('C:\\Users\\zu_ann\\YandexDisk\\Ивановская газета')
+    metatable = open('C:\\Users\\zu_ann\\YandexDisk\\Ивановская газета\\metadata.csv','a',encoding = 'utf-8')
+    row = '%s\t%s\t\t\t%s\t%s\tпублицистика\t\t\t%s\t\tнейтральный\tн-возраст\tн-уровень\tобластная\t%s\tИвановская газета\t\t%s\tгазета\tРоссия\tИвановская область\tru\n'
+    metatable.write(row % (path, author, title, date, topic, pageUrl, year))
+    metatable.close()
+
 def get_date(htl):
     d = {'января': '01', 'февраля': '02', 'марта': '03', 'апреля': '04', 'мая': '05', 'июня': '06', 'июля': '07', 'августа': '08', 'сентября': '09', 'октября': '10', 'ноября': '11', 'декабря': '12'}
     reg = re.compile('href=".+?([0-9]{2}\.([0-9]{2})\.([0-9]{4})).</a>', flags=re.U | re.DOTALL)
