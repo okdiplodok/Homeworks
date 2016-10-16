@@ -1,7 +1,7 @@
 import urllib.request
 import re
 import time
-import metadate
+import metadata
 import os
 import mystem
 
@@ -15,11 +15,11 @@ def find_all_pages():
         except:
             print('Error at', pageUrl)
             continue
-        date, month, year = metadate.get_date(htl)
-        author = metadate.get_author(htl)
-        title = metadate.get_title(htl)
-        topic = metadate.get_topic(htl)
-        text = metadate.get_text(htl)
+        date, month, year = metadata.get_date(htl)
+        author = metadata.get_author(htl)
+        title = metadata.get_title(htl)
+        topic = metadata.get_topic(htl)
+        text = metadata.get_text(htl)
         path = download_texts(i, year, month, author, title, date, topic, pageUrl, text)
         metatable_append(path, author, title, date, topic, pageUrl, year) 
         time.sleep(1)
