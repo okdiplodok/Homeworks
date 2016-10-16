@@ -1,28 +1,39 @@
 import os
 
-def mystem_xml(month, year):
-    path = 'C:' + os.sep + 'Users' + os.sep + 'zu_ann' + os.sep + 'YandexDisk' + os.sep + 'Ivgazeta'+ os.sep
+def mystem_xml():
+    path = 'C:' + os.sep + 'Users' + os.sep + 'Asus User' + os.sep + 'YandexDisk-AN5200' + os.sep + 'Ivgazeta'+ os.sep
     for y in range(2009,2016):
-        for m in range(01,12):
-            path_end = + os.sep + str(y) + os.sep + str(m)
-            lst = os.listdir(path + 'plain' + path_end)
-            for fl in lst:
-                if not os.path.exists(path + 'mystem-xml' + path_end):
-                    os.makedirs(path + 'mystem-xml' + path_end)
-                inp = path + 'plain' + path_end + os.sep + str(fl) + '.txt'
-                outp = path + 'mystem-xml' + path_end + os.sep + str(fl) + '.xml'
-                os.system(r'C:\mystem.exe --format xml ' + inp + ' ' + outp)
+        for m in range(1,12):
+            try:
+                if m == 1:
+                    mm = '01'
+                else:
+                    mm = str(m)
+                lst = os.listdir(path + 'plain' + os.sep + str(y) + os.sep + mm)
+                for fl in lst:
+                    if not os.path.exists(path + 'mystem-xml' + os.sep + str(y) + os.sep + mm):
+                        os.makedirs(path + 'mystem-xml' + os.sep + str(y) + os.sep + mm)
+                    inp = path + 'plain' + os.sep + str(y) + os.sep + mm
+                    outp = path + 'mystem-xml' + os.sep + str(y) + os.sep + mm
+                    os.system(r'C:\mystem.exe -nid -e utf-8 --format xml ' + inp + ' ' + outp)
+            except:
+                continue
 
-def mystem_plain(month, year):
-    path = 'C:' + os.sep + 'Users' + os.sep + 'zu_ann' + os.sep + 'YandexDisk' + os.sep + 'Ivgazeta'+ os.sep
+def mystem_plain():
+    path = 'C:' + os.sep + 'Users' + os.sep + 'Asus User' + os.sep + 'YandexDisk-AN5200' + os.sep + 'Ivgazeta'+ os.sep
     for y in range(2009,2016):
-        for m in range(01,12):
-            path_end = + os.sep + str(y) + os.sep + str(m)
-            lst = os.listdir(path + 'plain' + path_end)
-            for fl in lst:
-                if not os.path.exists(path + 'mystem-plain' + path_end):
-                    os.makedirs(path + 'mystem-plain' + path_end)
-                inp = path + 'plain' + path_end + os.sep + str(fl) + '.txt'
-                outp = path + 'mystem-xml' + path_end + os.sep + str(fl) + '.txt'
-                os.system(r'C:\mystem.exe ' + inp + ' ' + outp)
-
+        for m in range(1,12):
+            try:
+                if m == 1:
+                    mm = '01'
+                else:
+                    mm = str(m)
+                lst = os.listdir(path + 'plain' + os.sep + str(y) + os.sep + mm)
+                for fl in lst:
+                    if not os.path.exists(path + 'mystem-plain' + os.sep + str(y) + os.sep + mm):
+                        os.makedirs(path + 'mystem-plain' + os.sep + str(y) + os.sep + mm)
+                    inp = path + 'plain' + os.sep + str(y) + os.sep + mm
+                    outp = path + 'mystem-xml' + os.sep + str(y) + os.sep + mm
+                    os.system(r'C:\mystem.exe -nid -e utf-8 ' + inp + ' ' + outp)
+            except:
+                continue
