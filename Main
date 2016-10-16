@@ -1,0 +1,52 @@
+import metadate
+import os
+import mystem
+
+def find_all_pages():
+    k = 1
+    commonUrl = 'http://ivgazeta.ru/read/'
+    for i in range(9,22672): 
+        pageUrl = commonUrl + str(i)
+        try:
+            page = urllib.request.urlopen(pageUrl)
+            htl = page.read().decode('utf-8')            
+        except:
+            print('Error at', pageUrl)
+            return
+        date, month, year = metadate.get_date(htl)
+        author = metadate.get_author(htl)
+        title = metadate.get_title(htl)
+        topic = metadate.get_topic(htl)
+        text = metadate.get_text(htl)
+        path = download_texts(k, year, month, author, title, date, topic, pageUrl, text)
+        metatable_append(path, author, title, date, topic, pageUrl, year) 
+        time.sleep(1)
+        
+def metatable_append(path, author, title, date, topic, pageUrl, year):
+    if not os.path.exists('C:\\Users\\zu_ann\\YandexDisk\\Ivgazeta'):
+        os.makedirs('C:\\Users\\zu_ann\\YandexDisk\\Ivgazeta')
+    metatable = open('C:\\Users\\zu_ann\\YandexDisk\\Ivgazeta\\metadata.csv','a',encoding = 'utf-8')
+    row = '%s\t%s\t\t\t%s\t%s\tпублицистика\t\t\t%s\t\tнейтральный\tн-возраст\tн-уровень\tобластная\t%s\tИвановская газета\t\t%s\tгазета\tРоссия\tИвановская область\tru\n'
+    metatable.write(row % (path, author, title, date, topic, pageUrl, year))
+    metatable.close()
+
+def download_texts(k, year, month, author, title, date, topic, pageUrl, text):
+    if not os.path.exists('C:\\Users\\zu_ann\\YandexDisk\\Ivgazeta\\plain' + os.sep + year + os.sep + month):
+        os.makedirs('C:\\Users\\zu_ann\\YandexDisk\\Ivgazeta\\plain' + os.sep + year + os.sep + month)
+        k = 1
+    else:
+        k += 1
+    path = 'C:\\Users\\zu_ann\\YandexDisk\\Ivgazeta\\plain' + os.sep + year + os.sep + month + os.sep + str(k) + '.txt'
+    fw = open(path,'w',encoding = 'utf-8')
+    fw.write('@au ' + author + '\n' + '@ti ' + title + '\n' + '@da ' + date + '\n' + '@topic ' + topic + '\n' + '@url ' + pageUrl + '\n' + '\n' + text)
+    fw.close()
+    return path
+
+
+def main():
+    val = find_all_pages()
+    val2 = mystem.mystem_xml(val,val)
+    val3 = mystem.mystem_plain(val,val)
+
+if __name__ == '__main__':
+    main()
