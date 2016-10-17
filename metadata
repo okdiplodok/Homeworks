@@ -17,11 +17,15 @@ def get_date(htl):
             day = regex.group(1)
             month_let = regex.group(2)
             month = d[month_let]
-            try:
-                year = regex.group(3)
-            except:
+        else:
+            reg1 = re.compile('<span class="date">([0-9]{1,2}) ([а-яё]*?),', flags=re.U | re.DOTALL)
+            regex = re.search(reg1,htl)
+            if regex:
+                day = regex.group(1)
+                month_let = regex.group(2)
+                month = d[month_let]
                 year = '2016'
-            date = day + '.' + month + '.' + year
+        date = day + '.' + month + '.' + year
     return date, month, year
     
 def get_author(htl):
