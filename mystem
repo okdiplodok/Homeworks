@@ -1,7 +1,7 @@
 import os
 
 def mystem_xml():
-    path = 'C:' + os.sep + 'Users' + os.sep + 'Asus User' + os.sep + 'YandexDisk-AN5200' + os.sep + 'Ivgazeta'+ os.sep
+    path = 'C:' + os.sep + 'Users' + os.sep + 'zu_ann' + os.sep + 'YandexDisk' + os.sep + 'Ivgazeta'+ os.sep
     for y in range(2009,2016):
         for m in range(1,12):
             try:
@@ -15,12 +15,12 @@ def mystem_xml():
                         os.makedirs(path + 'mystem-xml' + os.sep + str(y) + os.sep + mm)
                     inp = path + 'plain' + os.sep + str(y) + os.sep + mm
                     outp = path + 'mystem-xml' + os.sep + str(y) + os.sep + mm
-                    os.system(r'C:\mystem.exe -nid -e utf-8 --format xml ' + inp + ' ' + outp)
+                    os.system(r'C:\mystem.exe ' + inp + ' ' + outp + ' -ncid --format xml')
             except:
                 continue
 
 def mystem_plain():
-    path = 'C:' + os.sep + 'Users' + os.sep + 'Asus User' + os.sep + 'YandexDisk-AN5200' + os.sep + 'Ivgazeta'+ os.sep
+    path = 'C:' + os.sep + 'Users' + os.sep + 'zu_ann' + os.sep + 'YandexDisk' + os.sep + 'Ivgazeta'+ os.sep
     for y in range(2009,2016):
         for m in range(1,12):
             try:
@@ -33,7 +33,7 @@ def mystem_plain():
                     if not os.path.exists(path + 'mystem-plain' + os.sep + str(y) + os.sep + mm):
                         os.makedirs(path + 'mystem-plain' + os.sep + str(y) + os.sep + mm)
                     inp = path + 'plain' + os.sep + str(y) + os.sep + mm
-                    outp = path + 'mystem-xml' + os.sep + str(y) + os.sep + mm
-                    os.system(r'C:\mystem.exe -nid -e utf-8 ' + inp + ' ' + outp)
+                    outp = path + 'mystem-plain' + os.sep + str(y) + os.sep + mm
+                    os.system(r'C:\mystem.exe ' + inp + ' ' + outp + ' -ncid')
             except:
                 continue
