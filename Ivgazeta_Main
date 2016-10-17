@@ -45,8 +45,8 @@ def download_texts(i, year, month, author, title, date, topic, pageUrl, text):
 
 def main():
     val = find_all_pages()
-    val2 = mystem.mystem_xml(val,val)
-    val3 = mystem.mystem_plain(val,val)
+    val2 = mystem.mystem_xml()
+    val3 = mystem.mystem_plain()
 
 if __name__ == '__main__':
     main()
