@@ -14,10 +14,10 @@ def mystem_xml():
 def mystem_plain():
     for root,dirs,files in os.walk('C:' + os.sep + 'Users' + os.sep + 'zu_ann' + os.sep + 'YandexDisk' + os.sep + 'Ivgazeta'+ os.sep + 'plain'):
         for fl in files:
-            rout = root.replace('plain', 'mystem-plain')
-            if not os.path.exists(rout):
-                os.makedirs(rout)
-            inp = root + os.sep + fl
-            outp = inp.replace('plain', 'mystem-plain')
-            os.system('C:\mystem.exe ' + inp + ' ' + outp + ' -cnid')
+            path_plain = root.replace('plain', 'mystem-plain')
+            if not os.path.exists(path_plain):
+                os.makedirs(path_plain)
+            old = root + os.sep + fl
+            new = path_plain + os.sep + fl
+            os.system('C:\mystem.exe ' + old + ' ' + new + ' -cnid')
            
