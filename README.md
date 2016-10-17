@@ -6,4 +6,4 @@
 2. Ivgazeta_Metadata: https://github.com/zu-ann/Homeworks/blob/master/metadata
 3. Ivgazeta_Mystem: https://github.com/zu-ann/Homeworks/blob/master/mystem
 
-###Cкачанные и обработанные файлы лежат здесь: https://yadi.sk/d/NktI-YmRx2VAM
+###Cкачанные и обработанные файлы лежат здесь: https://yadi.sk/d/TBuilBWWx3RK7
