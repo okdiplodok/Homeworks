@@ -3,13 +3,13 @@ import os
 def mystem_xml():
    for root,dirs,files in os.walk('C:' + os.sep + 'Users' + os.sep + 'zu_ann' + os.sep + 'YandexDisk' + os.sep + 'Ivgazeta'+ os.sep + 'plain'):
        for fl in files:
-           rout = root.replace('plain', 'mystem-xml')
-           if not os.path.exists(rout):
-               os.makedirs(rout)
-           inp = root + os.sep + fl
-           outp = inp.replace('plain', 'mystem-xml')
-           outp = outp.replace('.txt','.xml')
-           os.system('C:\mystem.exe ' + inp + ' ' + outp + ' -cnid --format xml')
+           path_plain = root.replace('plain', 'mystem-xml')
+           if not os.path.exists(path_plain):
+               os.makedirs(path_plain)
+           old = root + os.sep + fl
+           new = path_plain + os.sep + fl
+           new = new.replace('.txt','.xml')
+           os.system('C:\mystem.exe ' + old + ' ' + new + ' -cnid --format xml')
 
 def mystem_plain():
     for root,dirs,files in os.walk('C:' + os.sep + 'Users' + os.sep + 'zu_ann' + os.sep + 'YandexDisk' + os.sep + 'Ivgazeta'+ os.sep + 'plain'):
