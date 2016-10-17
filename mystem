@@ -1,39 +1,23 @@
 import os
 
 def mystem_xml():
-    path = 'C:' + os.sep + 'Users' + os.sep + 'zu_ann' + os.sep + 'YandexDisk' + os.sep + 'Ivgazeta'+ os.sep
-    for y in range(2009,2016):
-        for m in range(1,12):
-            try:
-                if m == 1:
-                    mm = '01'
-                else:
-                    mm = str(m)
-                lst = os.listdir(path + 'plain' + os.sep + str(y) + os.sep + mm)
-                for fl in lst:
-                    if not os.path.exists(path + 'mystem-xml' + os.sep + str(y) + os.sep + mm):
-                        os.makedirs(path + 'mystem-xml' + os.sep + str(y) + os.sep + mm)
-                    inp = path + 'plain' + os.sep + str(y) + os.sep + mm
-                    outp = path + 'mystem-xml' + os.sep + str(y) + os.sep + mm
-                    os.system(r'C:\mystem.exe ' + inp + ' ' + outp + ' -ncid --format xml')
-            except:
-                continue
+   for root,dirs,files in os.walk('C:' + os.sep + 'Users' + os.sep + 'zu_ann' + os.sep + 'YandexDisk' + os.sep + 'Ivgazeta'+ os.sep + 'plain'):
+       for fl in files:
+           rout = root.replace('plain', 'mystem-xml')
+           if not os.path.exists(rout):
+               os.makedirs(rout)
+           inp = root + os.sep + fl
+           outp = inp.replace('plain', 'mystem-xml')
+           outp = outp.replace('.txt','.xml')
+           os.system('C:\mystem.exe ' + inp + ' ' + outp + ' -cnid --format xml')
 
 def mystem_plain():
-    path = 'C:' + os.sep + 'Users' + os.sep + 'zu_ann' + os.sep + 'YandexDisk' + os.sep + 'Ivgazeta'+ os.sep
-    for y in range(2009,2016):
-        for m in range(1,12):
-            try:
-                if m == 1:
-                    mm = '01'
-                else:
-                    mm = str(m)
-                lst = os.listdir(path + 'plain' + os.sep + str(y) + os.sep + mm)
-                for fl in lst:
-                    if not os.path.exists(path + 'mystem-plain' + os.sep + str(y) + os.sep + mm):
-                        os.makedirs(path + 'mystem-plain' + os.sep + str(y) + os.sep + mm)
-                    inp = path + 'plain' + os.sep + str(y) + os.sep + mm
-                    outp = path + 'mystem-plain' + os.sep + str(y) + os.sep + mm
-                    os.system(r'C:\mystem.exe ' + inp + ' ' + outp + ' -ncid')
-            except:
-                continue
+    for root,dirs,files in os.walk('C:' + os.sep + 'Users' + os.sep + 'zu_ann' + os.sep + 'YandexDisk' + os.sep + 'Ivgazeta'+ os.sep + 'plain'):
+        for fl in files:
+            rout = root.replace('plain', 'mystem-plain')
+            if not os.path.exists(rout):
+                os.makedirs(rout)
+            inp = root + os.sep + fl
+            outp = inp.replace('plain', 'mystem-plain')
+            os.system('C:\mystem.exe ' + inp + ' ' + outp + ' -cnid')
+           
