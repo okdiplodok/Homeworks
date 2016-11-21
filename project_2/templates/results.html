@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta charset="UTF-8">
+        <title>Результаты</title>
+    </head>
+    <body>
+	<style>
+   .text {
+    text-align:  center;
+   }
+   </style>
+        <div class="text">
+		<table>
+			<caption> Результаты </caption>
+			<tr><th>Имя</th><th>Язык</th><th>Возраст</th><th>Пол</th><th>'в'</th><th>'на'</th><th>'под'</th><th>'перед'</th><th>'за'</th><th>'слева'</th><th>'справа'</th></tr>
+			{%for line in show_results%}
+			<tr>
+				{%for k in line%}
+				<td>{{k}}</td>
+				{%endfor%}
+			</tr>
+			{%endfor%}
+		</table>
+		<p><font size=4><a href="http://127.0.0.1:5000/">Анкета&nbsp;</a> <a href="http://127.0.0.1:5000/stats">&nbsp;Статистика&nbsp;</a> <a href="http://127.0.0.1:5000/json">&nbsp;Файл json&nbsp;</a> <a href="http://127.0.0.1:5000/search">&nbsp;Поиск </a></font></p>
+		</div>
+    </body>
+</html>
