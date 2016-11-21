@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta charset="UTF-8">
+        <title>Поиск</title>
+    </head>
+    <body>
+	<style>
+   .text {
+    text-align:  center;
+   }
+   </style>
+        <div class="text">
+		<h1>Поиск</h1>
+		<form method="GET" action = 'http://127.0.0.1:5000/results'>
+			<p><b>Имя </b><input type="text" name="name" value=""></p>
+			<p><b>Язык </b><input type="text" name="language" value=""></p>
+			<p><b>Предлог </b><input type="text" name="prep" value=""></p>
+			<p><input type="submit" value="Отправить"></p>
+		</form>
+		<p><font size=4><a href="http://127.0.0.1:5000/">Анкета&nbsp;</a> <a href="http://127.0.0.1:5000/json">&nbsp;Файл json&nbsp;</a> <a href="http://127.0.0.1:5000/stats">&nbsp;Статистика </a></font></p>
+		</div>
+    </body>
+</html>
