@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta charset="UTF-8">
+        <title>Лексико-типологическая анкета</title>
+    </head>
+    <body>
+	 <style>
+   .text {
+    text-align:  center;
+   }
+   </style>
+        <div class="text">
+        <h2>Лексико-типологическая анкета</h2>
+		<h1>Prepositions of place</h1>
+		<p><font size=4>Добро пожаловать на страницы анкеты!</font></p>
+		<p><font size=4>Вам предстоит пройти небольшой опрос, касающийся употребления предлогов места в разных языках.</font></p>
+		<p><font size=4>Пожалуйста, для начала введите ваши данные:</font></p>
+		<form method="GET">
+			<p><b>Ваше имя: </b><input type="text" name="a" value=""></p>
+            <p><b>Язык: </b><input type="text" name="b" value=""></p>
+			<p><b>Возраст: </b><input type="text" name="c" value=""></p>
+			<p><b>Пол: </b></p>
+			<input type="radio" name="d" value="m">м<Br>
+			<input type="radio" name="e" value="f">ж<Br>
+			<p><font size=4>Для каждой из этих картинок требуется определить местоположение зайца относительно портфеля. </font></p>
+			<p><font size=4>В текстовое поле запишите предлог, который бы вы для этого использовали.</font></p> 
+			<p><font size=4>NB! Для картинок 7 и 8 требуется ввести разные слова.</font></p> 
+			<p><font size=4>Удачи!</font></p>
+			<p><b>Вопрос 1 </b></p>
+			<img src="{{url_for('static', filename='in.jpg')}}" />
+			<p><input type="text" name="f" value=""></p>
+			<p><b>Вопрос 2 </b></p>
+			<img src="{{url_for('static', filename='on.jpg')}}" />
+			<p><input type="text" name="g" value=""></p>
+			<p><b>Вопрос 3 </b></p>
+			<img src="{{url_for('static', filename='under.jpg')}}" />
+			<p><input type="text" name="h" value=""></p>
+			<p><b>Вопрос 4 </b></p>
+			<img src="{{url_for('static', filename='in front of.jpg')}}" />
+			<p><input type="text" name="i" value=""></p>
+			<p><b>Вопрос 5 </b></p>
+			<img src="{{url_for('static', filename='behind.jpg')}}" />
+			<p><input type="text" name="j" value=""></p>
+			<p><b>Вопрос 6 </b></p>
+			<img src="{{url_for('static', filename='between.jpg')}}" />
+			<p><input type="text" name="k" value=""></p>
+			<p><b>Вопрос 7 </b></p>
+			<img src="{{url_for('static', filename='left.jpg')}}" />
+			<p><input type="text" name="l" value=""></p>
+			<p><b>Вопрос 8 </b></p>
+			<img src="{{url_for('static', filename='right.jpg')}}" />
+			<p><input type="text" name="m" value=""></p>
+			<p><input type="submit" value="Done!"></p>
+			<h2>Спасибо за участие!</h2>
+			<img src="{{url_for('static', filename='1.jpg')}}" />
+			<br>
+			<br>
+			<p><font size=4><a href="http://127.0.0.1:5000/stats">Статистика&nbsp;</a> <a href="http://127.0.0.1:5000/json">&nbsp;Файл json&nbsp;</a> <a href="http://127.0.0.1:5000/search">&nbsp;Поиск </a></font></p>
+			<br>
+		</form>
+		</div>
+    </body>
+</html>
