@@ -10,3 +10,6 @@
 
 ## Сайт-анкета:
   https://github.com/zu-ann/Homeworks/tree/master/project_2
+
+## Контрольная:
+  https://github.com/zu-ann/Homeworks/blob/master/thai_eng
