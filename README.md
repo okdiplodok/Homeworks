@@ -13,3 +13,6 @@
 
 ## Контрольная:
   https://github.com/zu-ann/Homeworks/blob/master/thai_eng
+  
+## Домашнее задание по множествам:
+  https://github.com/zu-ann/Homeworks/blob/master/project_3_zueva
