@@ -1,0 +1,85 @@
+import urllib.request
+import re
+import html
+
+def downloading():
+    pagesUrl = ['http://www.rbc.ru/rbcfreenews/5819f00a9a79477231e2610a', 'https://ria.ru/society/20161102/1480571624.html', 'https://rg.ru/2016/11/02/mchs-rasskazhet-ob-uraganah-i-katastrofah-cherez-socseti.html', 'http://www.forbes.ru/news/332085-mchs-budet-opoveshchat-o-teraktakh-i-bedstviyakh-cherez-odnoklassniki-i-vkontakte', 'http://www.mchs.gov.ru/dop/info/smi/news/item/32955605/']
+    regs = ['<div class="article__text">.*?<p>(.*?)<span class="article__logo"></span>','<p><strong>(.*?)</p></div><div class=\"b-article__bottom-info\">','<div class="lead">(.*?)</p></div></article>','<div class="news">.<p>(.*?)</p>.</div>','<article class="content clearfix">.(.*?)<h3>']
+    sub_a = re.compile('<.*?>',flags=re.U | re.DOTALL)
+    sub_ria1 = re.compile('<div class="b-inject__article-photo">.*?</a></div></div></div>',flags=re.U | re.DOTALL)
+    sub_ria2 = re.compile('<script type="text/javascript">.*?</div>.<p>',flags=re.U | re.DOTALL)
+    sub_forbes = re.compile('<table class="two-vrezka"><tr><td>.*?</td></tr></table>',flags=re.U | re.DOTALL)
+    lists = []
+    for i,url in enumerate(pagesUrl):
+        page = urllib.request.urlopen(url)
+        try:
+            htl = page.read().decode('utf-8')
+        except:
+            htl = page.read().decode('windows-1251')
+        reg = re.compile(regs[i], flags=re.U | re.DOTALL)
+        regex = re.search(reg,htl)
+        if regex:
+            a = regex.group(1)
+            if i == 1:
+                a = sub_ria1.sub(' ',a)
+                a = sub_ria2.sub(' ',a)
+            if i == 3:
+                a = sub_forbes.sub(' ',a)
+            a = sub_a.sub('',html.unescape(a))
+            a = a.replace('\n',' ')
+            a = a.replace('—','')
+            a = a.replace(' – ','')
+            a = a.replace('«','')
+            a = a.replace(',','')
+            lst = a.split()
+            p = ''
+            for i,m in enumerate(lst):
+                lst[i] = m.strip(',.- \"\'\«\»;:\(\)?!/')
+                lst[i] = lst[i].lower()
+                if p in lst:
+                    p = lst.pop(i)
+            lists.append(lst)   
+    return lists
+
+def creating_sets(lists):
+    sets = []
+    for l in lists:
+        sets.append(set(l))
+    return sets
+
+def counting(lists):
+    d = {}
+    for line in lists:
+        for word in line:
+            if word in d:
+                d[word] += 1
+            else:
+                d[word] = 1
+    print(d)
+    return d
+
+def comparing_intersections(sets):
+    fw = open('Intersections.txt','w',encoding = 'utf-8')
+    intersect = sets[0] & sets[1] & sets[2] & sets[3] & sets[4]
+    for word in sorted(intersect):
+        fw.write(word + '\n')
+    fw.close()
+
+def comparing_symmetric_difference(sets, d):
+    fw = open('Symmetric difference.txt','w',encoding = 'utf-8')
+    symmetric_difference = sets[0] ^ sets[1] ^ sets[2] ^ sets[3] ^ sets[4]
+    for word in sorted(symmetric_difference):
+        if d[word] > 1:
+            fw.write(word + '\n')
+    fw.close()
+
+def main():
+    val = downloading()
+    val2 = creating_sets(val)
+    val3 = counting(val)
+    val4 = comparing_intersections(val2)
+    val5 = comparing_symmetric_difference(val2,val3)
+
+if __name__ == '__main__':
+    main()
+    
