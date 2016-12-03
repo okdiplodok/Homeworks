@@ -1,6 +1,4 @@
-import urllib.request
-import re
-import html
+import urllib.request, re, html
 
 def downloading():
     pagesUrl = ['http://www.rbc.ru/rbcfreenews/5819f00a9a79477231e2610a', 'https://ria.ru/society/20161102/1480571624.html', 'https://rg.ru/2016/11/02/mchs-rasskazhet-ob-uraganah-i-katastrofah-cherez-socseti.html', 'http://www.forbes.ru/news/332085-mchs-budet-opoveshchat-o-teraktakh-i-bedstviyakh-cherez-odnoklassniki-i-vkontakte', 'http://www.mchs.gov.ru/dop/info/smi/news/item/32955605/']
