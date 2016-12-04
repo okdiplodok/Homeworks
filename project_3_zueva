@@ -53,7 +53,6 @@ def counting(lists):
                 d[word] += 1
             else:
                 d[word] = 1
-    print(d)
     return d
 
 def comparing_intersections(sets):
@@ -65,9 +64,10 @@ def comparing_intersections(sets):
 
 def comparing_symmetric_difference(sets, d):
     fw = open('Symmetric difference.txt','w',encoding = 'utf-8')
-    symmetric_difference = sets[0] ^ sets[1] ^ sets[2] ^ sets[3] ^ sets[4]
+    symmetric_difference = sets[0] ^ sets[1] ^ sets[2] ^ sets[3] ^ sets[4] - sets[0] & sets[1] & sets[2] & sets[3] & sets[4]
     for word in sorted(symmetric_difference):
         if d[word] > 1:
+            #print(word + ' ' + str(d[word]))
             fw.write(word + '\n')
     fw.close()
 
@@ -80,4 +80,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
     
