@@ -16,3 +16,6 @@
   
 ## Домашнее задание по множествам:
   https://github.com/zu-ann/Homeworks/blob/master/project_3_zueva
+
+## Экзамен:
+  https://github.com/zu-ann/Homeworks/tree/master/exam
