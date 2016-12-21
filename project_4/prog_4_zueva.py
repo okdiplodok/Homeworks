@@ -1,7 +1,7 @@
 import os, re, html
 
 def mystem_():
-    path = 'C:' + os.sep + 'Users' + os.sep + 'zu_ann' + os.sep + 'Desktop' + os.sep + 'lines.txt'
+    path = 'C:' + os.sep + 'Users' + os.sep + 'zu_ann' + os.sep + 'Desktop' + os.sep + 'text.txt'
     new_file = 'C:' + os.sep + 'Users' + os.sep + 'zu_ann' + os.sep + 'Desktop' + os.sep + 'lines_words.txt'
     os.system('C:\mystem.exe ' + path + ' ' + new_file + ' -cnd')
     return new_file
@@ -44,6 +44,7 @@ def table_wordforms(new_file,wordforms):
     fr = fr.replace('\t', '\s')
     fr = fr.replace('\\u', '\s')
     fr = fr.strip('\n\n')
+    fr = fr.strip('\\n\\n')
     fr = fr.split('\s')
     n = 0
     for i,word_mark in enumerate(fr):
