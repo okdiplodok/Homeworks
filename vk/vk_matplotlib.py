@@ -19,7 +19,6 @@ def get_from_posts(key,posts):
         keys[id] = posts[id][key]
     json.dump(keys, fw2, ensure_ascii=False)
     fw2.close()
-    #print('get posts_' + key)
     return keys
 
 def get_from_comments(key,comments):
@@ -30,7 +29,6 @@ def get_from_comments(key,comments):
             keys[i['id']] = i[key]
     json.dump(keys, fw, ensure_ascii=False)
     fw.close()
-    #print('get comments_' + key)
     return keys
 
 def get_information(post_info, comm_info):
@@ -43,20 +41,15 @@ def get_information(post_info, comm_info):
     for i in dates:
         dates[i] = time.strftime('%d.%m.%Y',time.gmtime(dates[i]))
     reg_date = re.compile('([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{4})')
-    #print('dates')
     for post_id in users:
         if not str(users[post_id]).startswith('-'):
             user = {}
             result = vk_api('users.get', user_ids = users[post_id], fields = 'city, bdate')
-            #json.dump(result, fw, ensure_ascii=False)
             if 'city' in result['response'][0] and result['response'][0]['city'] != 0:
                 city_id = result['response'][0]['city']
                 res_city = vk_api('database.getCitiesById', city_ids = city_id)
-                #print(res_city)
                 city = res_city['response'][0]['name']
-                #print(city)
                 user['city'] = city
-                #print('city')
             if 'bdate' in result['response'][0]:
                 res_bdate = reg_date.search(result['response'][0]['bdate'])
                 res_date = reg_date.search(dates[post_id])
@@ -70,14 +63,11 @@ def get_information(post_info, comm_info):
                             age = int(res_date.group(3)) - int(res_bdate.group(3)) - 1
                     else:
                         age = int(res_date.group(3)) - int(res_bdate.group(3)) - 1
-                    #print('age')
                     user['age'] = age
             users_info[post_id] = user
-            #print(users_info)
     for key in list(users_info):
         if users_info[key] == {}:
             users_info.pop(key)
-    #print('users_info')
     json.dump(users_info, fw, ensure_ascii=False)
     fw.close()
     return users_info
@@ -89,19 +79,15 @@ def get_posts(group_id):
     while len(response) < item_count:
         result = vk_api('wall.get', owner_id = group_id, count = item_count, offset = len(response))
         response += result['response']
-    #json.dump(result, fw, ensure_ascii=False)
     posts = {}
     for i in range(len(response)):
         if (type(response[i]) != int and type(response[i]) != str):
-            #print(response[i])
-            #print(response[i]['id'])
             posts[response[i]['id']] = response[i]
     json.dump(posts, fw, ensure_ascii=False)
     post_texts = get_from_posts('text', posts)
     post_users = get_from_posts('from_id', posts)
     post_dates = get_from_posts('date', posts)
     fw.close()
-    #print('get_posts')
     return posts, post_users, post_dates, post_texts
 
 def get_comments(group_id, posts):
@@ -110,19 +96,16 @@ def get_comments(group_id, posts):
     fw2 = open('text_comments_id.json', 'w', encoding='UTF-8')
     posts = posts[0]
     for id in posts:
-        #print(id)
         comments = []
         item_count = posts[id]['comments']['count']
         while len(comments) < item_count:
             result = vk_api('wall.getComments', owner_id = group_id, post_id = id, count = 100, offset = len(comments), v = '5.63', preview_length = 0)
-            #print(result)
             comments += result['response']['items']
         all_comments[id] = comments
     json.dump(all_comments, fw, ensure_ascii=False)
     for key in list(all_comments):
         if all_comments[key] == []:
             all_comments.pop(key)
-    #print(all_comments)
     comm_texts_id = {}
     for id in all_comments:
         comm_texts_id[id] = [comment['text'] for comment in all_comments[id]]
@@ -153,7 +136,7 @@ def plots1(post_info, comm_info):
     plt.ylabel('Средняя длина комментариев')
     plt.grid(True, color='orchid')
     plt.show()
-    plt.savefig('Соотношение длины поста и средней длины комментариев.pdf')
+    #plt.savefig('Соотношение длины поста и средней длины комментариев.pdf')
     plt.close()
 
 def plots2(users_info, post_info, comm_info):
@@ -173,7 +156,7 @@ def plots2(users_info, post_info, comm_info):
     plt.ylabel('Средняя длина поста/комментария')
     plt.grid(True, color='orchid')
     plt.show()
-    plt.savefig('Соотношение возраста и средней длины поста/комментария.pdf')
+    #plt.savefig('Соотношение возраста и средней длины поста/комментария.pdf')
     plt.close()
     return texts
 
@@ -191,7 +174,7 @@ def plots3(users_info, texts):
     plt.xlabel('Города')
     plt.ylabel('Средняя длина поста/комментария')
     plt.show()
-    plt.savefig('Соотношение города и средней длины поста/комментария.pdf')
+    #plt.savefig('Соотношение города и средней длины поста/комментария.pdf')
     plt.close()
 
 def count_words(text):
