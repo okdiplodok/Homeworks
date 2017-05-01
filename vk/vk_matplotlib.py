@@ -3,7 +3,9 @@ import matplotlib.pyplot as plt
 from matplotlib import style
 style.use('ggplot')
 
-group_id = '-45254497'
+from collections import Counter
+
+group_id = '-57354358'
 
 def vk_api(method, **kwargs):
     api_request = 'https://api.vk.com/method/' + method + '?'
@@ -11,7 +13,7 @@ def vk_api(method, **kwargs):
     return json.loads(requests.get(api_request).text)
 
 def get_from_posts(key,posts):
-    fw2 = open(key + '_post.json', 'w', encoding='UTF-8')
+    fw2 = open(key + '_posts.json', 'w', encoding='UTF-8')
     keys = {}
     for id in posts:
         keys[id] = posts[id][key]
@@ -81,7 +83,7 @@ def get_information(post_info, comm_info):
     return users_info
 
 def get_posts(group_id):
-    item_count = 101
+    item_count = 200
     fw = open("posts.json",'w',encoding='UTF-8')
     response = []
     while len(response) < item_count:
@@ -125,30 +127,24 @@ def get_comments(group_id, posts):
     for id in all_comments:
         comm_texts_id[id] = [comment['text'] for comment in all_comments[id]]
     json.dump(comm_texts_id, fw2, ensure_ascii=False)
-    comm_texts = get_from_comments('from_id', all_comments)
+    comm_texts = get_from_comments('text', all_comments)
     comm_users = get_from_comments('from_id', all_comments)
     comm_dates = get_from_comments('date', all_comments)
     fw.close()
     fw2.close()
-    #print('get_commments')
     return comm_users, comm_dates, comm_texts_id, comm_texts
 
-def plots(users_info, post_info, comm_info):
+def plots1(post_info, comm_info):
     post_texts = post_info[3]
     comm_texts_id = comm_info[2]
-    comm_texts = comm_info[3]
     length = {}
     for id in post_texts:
         num_post = count_words(post_texts[id])
-        #print(num_post)
         if id in comm_texts_id:
             num_comm = []
             for comm in comm_texts_id[id]:
                 num_comm.append(count_words(comm))
-            #print(num_comm)
             length[num_post] = sum(num_comm)/len(num_comm)
-            #print(str(length))
-    #print('counted')
     keys = [i for i in length.keys()]
     values = [i for i in length.values()]
     plt.plot(keys, values)
@@ -159,14 +155,15 @@ def plots(users_info, post_info, comm_info):
     plt.show()
     plt.savefig('Соотношение длины поста и средней длины комментариев.pdf')
     plt.close()
+
+def plots2(users_info, post_info, comm_info):
+    post_texts = post_info[3]
+    comm_texts = comm_info[3]
     texts = dict(list(post_texts.items()) + list(comm_texts.items()))
-    print(texts)
     length_age = {}
     for id in sorted(users_info):
-        print(id)
         if 'age' in users_info[id]:
-            print(texts[id])
-            length_age[users_info[id]['age']] = count_words(str(texts[id]))
+            length_age[users_info[id]['age']] = count_words(texts[id])
     print(length_age)
     age = [i for i in length_age.keys()]
     values2 = [i for i in length_age.values()]
@@ -174,9 +171,13 @@ def plots(users_info, post_info, comm_info):
     plt.title('Соотношение возраста и средней длины поста/комментария')
     plt.xlabel('Возраст')
     plt.ylabel('Средняя длина поста/комментария')
+    plt.grid(True, color='orchid')
     plt.show()
-    #plt.savefig('Соотношение возраста и средней длины поста/комментария.pdf')
+    plt.savefig('Соотношение возраста и средней длины поста/комментария.pdf')
     plt.close()
+    return texts
+
+def plots3(users_info, texts):
     length_city = {}
     for id in sorted(users_info):
         if 'city' in users_info[id]:
@@ -184,7 +185,8 @@ def plots(users_info, post_info, comm_info):
     print(length_city)
     city = [i for i in length_city.keys()]
     values3 = [i for i in length_city.values()]
-    plt.bar(city, values3)
+    plt.bar(range(len(city)), values3)
+    plt.xticks(range(len(city)), city, rotation='vertical')
     plt.title('Соотношение города и средней длины поста/комментария')
     plt.xlabel('Города')
     plt.ylabel('Средняя длина поста/комментария')
@@ -211,18 +213,14 @@ def count_words(text):
         for n,w in enumerate(words):
             if w == i:
                 words.pop(n)
-    #print('count_words')
-    #print(words)
-    #print(len(words))
     return len(words)
-
-
 
 def main(group_id):
     a = get_posts(group_id)
     b = get_comments(group_id, a)
     c = get_information(a,b)
-    d = plots(c,a,b)
+    plots1(a,b)
+    plots3(c, plots2(c, a, b))
 
 if __name__ == '__main__':
     main(group_id)
