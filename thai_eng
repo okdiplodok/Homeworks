@@ -1,0 +1,30 @@
+import os
+import re
+import html
+
+def creating_dict():
+    path = 'C:\\Users\\zu_ann\\Desktop\\contr\\thai_pages'
+    for root,dirs,files in os.walk(path):
+        for fl in files:
+            f = open(root + os.sep + fl,'r',encoding = 'utf-8')
+            fr = f.read()
+            dic = {}
+            words_new = []
+            thaieng = re.compile('<tr><td class=th><a href=\'/id/[0-9]+?\'>(.+?)</a></td><td>.+?</td><td>(.+?)</td></tr>',flags=re.U | re.DOTALL)
+            words_dict = re.findall(thaieng,fr)
+            sub_a = re.compile('<.*?>',flags=re.U | re.DOTALL)
+            sub_x = re.compile('\xa0',flags=re.U | re.DOTALL)
+            for n in words_dict:
+                for p in n:
+                    new_p = sub_a.sub('',html.unescape(p))
+                    new_p = sub_x.sub('',new_p)
+                    words_new.append(new_p)
+            for i,word in enumerate(words_new):
+                dic[word] = words_new[i+1]
+                if i+2 == len(words_new):
+                    break
+            print(dic)
+            
+if __name__ == '__main__':
+    creating_dict()
+            
