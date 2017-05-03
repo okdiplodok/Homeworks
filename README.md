@@ -1,6 +1,6 @@
 # Homeworks
 
-## Программа для обработки газеты состоит из 3 частей:
+## Программа для обработки газеты:
   https://github.com/zu-ann/Homeworks/tree/master/project_1
 
 ## Сайт-анкета:
