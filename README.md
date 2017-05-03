@@ -1,12 +1,14 @@
 # Homeworks
 
-* ## 4 модуль:
+## 4 модуль:
 
 ### Домашнее задание Matplotlib + VK:
   https://github.com/zu-ann/Homeworks/tree/master/vk
 
 
-* ## 1-2 модуль:
+
+## 1-2 модуль:
+
 ### Программа для обработки газеты:
   https://github.com/zu-ann/Homeworks/tree/master/project_1
 
