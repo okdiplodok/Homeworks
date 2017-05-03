@@ -22,3 +22,6 @@
   
 ## Домашнее задание по SQL:
   https://github.com/zu-ann/Homeworks/blob/master/project_4/prog_4_zueva.py
+
+## Домашнее задание Matplotlib + VK:
+  https://github.com/zu-ann/Homeworks/tree/master/vk
