@@ -7,11 +7,7 @@ WEBHOOK_URL_PATH = "/{}/".format(conf.TOKEN)
 
 bot = telebot.TeleBot(conf.TOKEN,
                       threaded=False)
-
-# удаляем предыдущие вебхуки, если они были
 bot.remove_webhook()
-
-# ставим новый вебхук = Слышь, если кто мне напишет, стукни сюда — url
 bot.set_webhook(url=WEBHOOK_URL_BASE + WEBHOOK_URL_PATH)
 
 app = flask.Flask(__name__)
@@ -20,8 +16,8 @@ morph = MorphAnalyzer()
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-    bot.send_message(message.chat.id, "Привет! Это бот, который генерирует ответы, используя слова из антиутопии Дж.Оруэлла \"1984\". 
-                     \Напиши что-нибудь!")
+    bot.send_message(message.chat.id, "Привет! Это бот, который генерирует ответы, используя слова из антиутопии Дж.Оруэлла \"1984\".\
+    Напиши что-нибудь!")
 
 def split_sentence(message):
     text = message.text
@@ -128,13 +124,10 @@ def send_answer(message):
     print(reply)
     bot.send_message(message.chat.id, reply)
 
-# пустая главная страничка для проверки
 @app.route('/', methods=['GET', 'HEAD'])
 def index():
     return 'ok'
 
-
-# обрабатываем вызовы вебхука = функция, которая запускается, когда к нам постучался телеграм
 @app.route(WEBHOOK_URL_PATH, methods=['POST'])
 def webhook():
     if flask.request.headers.get('content-type') == 'application/json':
