@@ -20,7 +20,8 @@ morph = MorphAnalyzer()
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-    bot.send_message(message.chat.id, "Привет! Это бот, который генерирует ответы, используя слова из антиутопии Дж.Оруэлла \"1984\". Напиши что-нибудь!")
+    bot.send_message(message.chat.id, "Привет! Это бот, который генерирует ответы, используя слова из антиутопии Дж.Оруэлла \"1984\". 
+                     \Напиши что-нибудь!")
 
 def split_sentence(message):
     text = message.text
